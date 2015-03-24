@@ -6,11 +6,11 @@ use warnings;
 
 package Log::Any::Adapter::Carp;
 
-our($VERSION) = '1.00';
+our($VERSION) = '1.01';
 our(@CARP_NOT) = (__PACKAGE__, 'Log::Any::Proxy');
 
 use Scalar::Util qw(reftype);
-use Log::Any::Adapter::Util ();
+use Log::Any::Adapter::Util 1;
 
 use parent 'Log::Any::Adapter::Base';
 
@@ -201,7 +201,7 @@ Are there, for certain, but have yet to be cataloged.
 
 =head1 VERSION
 
-version 1.00
+version 1.01
 
 =head1 AUTHOR
 
