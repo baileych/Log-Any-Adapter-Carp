@@ -6,7 +6,7 @@ use warnings;
 
 package Log::Any::Adapter::Carp;
 
-our($VERSION) = '1.01';
+our($VERSION) = '1.02';
 our(@CARP_NOT) = (__PACKAGE__, 'Log::Any::Proxy');
 
 use Scalar::Util qw(reftype);
@@ -60,7 +60,15 @@ sub init {
     my @skip_pkgs;
     push @skip_pkgs, $callpack
       if $self->{skip_me};
-    push @skip_pkgs, @{ $self->{skip_packages} || [] };
+
+    if (exists $self->{skip_packages}) {
+      if (reftype $self->{skip_packages} eq 'ARRAY') {
+	push @skip_pkgs, @{ $self->{skip_packages} };
+      }
+      else {
+	push @skip_pkgs, $self->{skip_packages};
+      }
+    }
 
     my $carp = $self->{full_trace} ?
       *Log::Any::Adapter::Carp::Carpish::cluck :
@@ -183,6 +191,11 @@ of the function called I<from> the last skipped package may limit its
 value for this particular purpose.  At a minimum, you may wish to
 consider trimming off the prefix via a C<$SIG{__WARN__}> hook.)
 
+If the value is anything else, it's just used as is.  This means a
+simple package name will let you skip just that package, but any type
+of reference will probably not be useful. Subclasses may, of course,
+elect to extend this behavior, such as by accepting a code reference.
+
 Defaults to empty.
 
 =back
@@ -201,7 +214,7 @@ Are there, for certain, but have yet to be cataloged.
 
 =head1 VERSION
 
-version 1.01
+version 1.02
 
 =head1 AUTHOR
 

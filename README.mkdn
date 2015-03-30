@@ -79,6 +79,11 @@ configure the adapter include:
     value for this particular purpose.  At a minimum, you may wish to
     consider trimming off the prefix via a `$SIG{__WARN__}` hook.)
 
+    If the value is anything else, it's just used as is.  This means a
+    simple package name will let you skip just that package, but any type
+    of reference will probably not be useful. Subclasses may, of course,
+    elect to extend this behavior, such as by accepting a code reference.
+
     Defaults to empty.
 
 ## EXPORT
@@ -95,7 +100,7 @@ Are there, for certain, but have yet to be cataloged.
 
 # VERSION
 
-version 1.01
+version 1.02
 
 # AUTHOR
 
