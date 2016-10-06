@@ -6,7 +6,7 @@ use warnings;
 
 package Log::Any::Adapter::Carp;
 
-our($VERSION) = '1.02';
+our($VERSION) = '1.03';
 our(@CARP_NOT) = (__PACKAGE__, 'Log::Any::Proxy');
 
 use Scalar::Util qw(reftype);
